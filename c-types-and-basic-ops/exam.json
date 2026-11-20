@@ -1,0 +1,196 @@
+[
+  {
+    "id": "c1-q01",
+    "type": "single",
+    "task": "1.1",
+    "question": "下面关于类型的说法，哪一项正确？",
+    "options": [
+      "类型主要决定变量在源码里的名字",
+      "类型主要决定位模式如何解释以及通常占多少字节",
+      "类型只影响 `printf` 格式符，不影响运算",
+      "所有基本类型在所有平台上大小都相同"
+    ],
+    "answer": [1],
+    "explanation": "类型是解释规则与大小；名字是标识符。运算与转换都依赖类型。平台数据模型不同，宽度可不相同。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c1-q02",
+    "type": "single",
+    "task": "1.1",
+    "question": "`int a; int b = 10; a = b + 1;` 这段最准确的评价是？",
+    "options": [
+      "因为 `a` 未初始化，整段一定是未定义行为",
+      "读取了未初始化的 `a`",
+      "没有读取未初始化的 `a`，相对安全",
+      "`b + 1` 不能赋给未声明过初值的变量"
+    ],
+    "answer": [2],
+    "explanation": "赋值左边是写入位置；右边只使用已初始化的 `b`。危险的是赋值前读取 `a`。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c2-q01",
+    "type": "single",
+    "task": "1.2",
+    "question": "`unsigned int x = -1;` 之后，用无符号语义理解 `x`，最接近？",
+    "options": [
+      "值为 -1，且 `%d` 打印一定显示 -1",
+      "该宽度下很大的非负值",
+      "编译器必须报错并拒绝编译",
+      "值一定是 0"
+    ],
+    "answer": [1],
+    "explanation": "负值转换为 unsigned 按模 2ⁿ；常见 32 位得到 4294967295。用错格式符会误导，但不改变“无符号大数”的语义。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c2-q02",
+    "type": "single",
+    "task": "1.2",
+    "question": "字面量 `014` 的十进制值是？",
+    "options": ["14", "12", "8", "16"],
+    "answer": [1],
+    "explanation": "前导 0 表示八进制：1*8+4=12。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c3-q01",
+    "type": "single",
+    "task": "1.3",
+    "question": "关于 `'A'` 与 `\"A\"`，正确的是？",
+    "options": [
+      "二者在 C 中类型相同",
+      "`'A'` 是字符常量（整数），`\"A\"` 是字符串字面量",
+      "二者都不能赋给 `char` 变量",
+      "`\"A\"` 的长度一定是 1（不含任何其他字节）"
+    ],
+    "answer": [1],
+    "explanation": "字符常量是整数；字符串字面量是以 `\\0` 结尾的字符序列，至少含 `'A'` 与 `'\\0'`。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c3-q02",
+    "type": "single",
+    "task": "1.3",
+    "question": "比较两个经运算得到的 `double` 是否“数学上相等”，更稳妥的做法是？",
+    "options": [
+      "直接用 `==`",
+      "先都强制转成 `int` 再比",
+      "考虑误差范围（或专用比较），避免裸 `==`",
+      "只能改用 `float` 再 `==`"
+    ],
+    "answer": [2],
+    "explanation": "二进制浮点常有舍入误差；`float` 一般更不精确，不是解决方案。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c4-q01",
+    "type": "single",
+    "task": "1.4",
+    "question": "`double x = 7 / 2;` 中 `x` 的值是？",
+    "options": ["3.5", "3.0", "4.0", "未定义"],
+    "answer": [1],
+    "explanation": "`7` 与 `2` 都是 `int`，先整除得 3，再转为 `double` 得 3.0。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c4-q02",
+    "type": "single",
+    "task": "1.4",
+    "question": "下列哪句能得到约 3.5 的浮点结果？",
+    "options": [
+      "`double x = 7 / 2;`",
+      "`double x = 7 / 2.0;`",
+      "`int x = 7.0 / 2.0;`",
+      "`double x = (int)(7.0 / 2.0);`"
+    ],
+    "answer": [1],
+    "explanation": "`7/2.0` 至少一边为浮点。赋给 `int` 或再转回会丢掉小数。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c5-q01",
+    "type": "single",
+    "task": "1.5",
+    "question": "`int i = 3; int x = i++;` 之后？",
+    "options": [
+      "`i=4, x=4`",
+      "`i=4, x=3`",
+      "`i=3, x=4`",
+      "`i=3, x=3`"
+    ],
+    "answer": [1],
+    "explanation": "后缀：表达式值为旧值 3 赋给 `x`，然后 `i` 变为 4。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c5-q02",
+    "type": "single",
+    "task": "1.5",
+    "question": "下面哪项属于应避免的未定义行为写法？",
+    "options": [
+      "`i += 1;`",
+      "`++i;`",
+      "`i = i++ + ++i;`",
+      "`int x = i + 1;`"
+    ],
+    "answer": [2],
+    "explanation": "同一表达式内对同一标量无序地多次修改是 UB。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c6-q01",
+    "type": "single",
+    "task": "1.6",
+    "question": "`a`、`b` 均为 `int`，哪句最适合得到浮点除法？",
+    "options": [
+      "`double r = a / b;`",
+      "`double r = (double)(a / b);`",
+      "`double r = (double)a / b;`",
+      "`double r = (int)((double)a / b);`"
+    ],
+    "answer": [2],
+    "explanation": "必须在 `/` 之前引入浮点操作数。A/B 都在整除之后才变成 `double`；D 又截成 `int`。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c6-q02",
+    "type": "single",
+    "task": "1.6",
+    "question": "`int k = 3.9;` 之后 `k` 是？",
+    "options": ["3", "4", "3.9", "未定义"],
+    "answer": [0],
+    "explanation": "浮点转整数向 0 截断小数部分。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c6-q03",
+    "type": "match",
+    "task": "1.6",
+    "question": "把表达式与结果配对。",
+    "prompts": [
+      "`7 / 2`",
+      "`(double)7 / 2`",
+      "`(double)(7 / 2)`"
+    ],
+    "options": ["`3`", "`3.0`（由整除再转换）", "`3.5`"],
+    "answer": [0, 2, 1],
+    "explanation": "整除得 3；先转再除得 3.5；先整除再转得 3.0。",
+    "source": "tutor generated"
+  },
+  {
+    "id": "c-mix-q01",
+    "type": "order",
+    "task": "1.4",
+    "question": "要把两个 `int` 的商存成带小数的 `double`，按正确思路排序步骤。",
+    "options": [
+      "用 `/` 做除法",
+      "把结果写入 `double` 变量",
+      "先把至少一个操作数转为浮点（如 `(double)a`）"
+    ],
+    "answer": [2, 0, 1],
+    "explanation": "必须先出现浮点操作数，再除，最后（或同时）存入 `double`。若先除再转，小数已丢。",
+    "source": "tutor generated"
+  }
+]

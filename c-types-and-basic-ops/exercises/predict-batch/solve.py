@@ -1,0 +1,7 @@
+print("1 3")
+print("2 3.0")
+print("3 3.5")
+print("4 4_3")
+print("5 12")
+print("6 big")
+print("7 trunc3")

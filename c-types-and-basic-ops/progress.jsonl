@@ -1,0 +1,10 @@
+{"ts":"2026-11-18T13:37:25","topic":"c-types-and-basic-ops","source":"chat","task":"1.1","qid":"c1-type-means-what","question":"类型主要决定什么？A名字 B位模式解释与大小 C仅打印有用","result":"correct","attempt":1,"answer":"B"}
+{"ts":"2026-11-18T13:53:16","topic":"c-types-and-basic-ops","source":"chat","task":"1.1","qid":"c1-uninit-danger","question":"哪句最危险？int a; int b=10; a=b+1;","result":"wrong","attempt":1,"answer":"A","note":"chose declaration as danger"}
+{"ts":"2026-11-18T13:53:59","topic":"c-types-and-basic-ops","source":"chat","task":"1.1","qid":"c1-uninit-danger","question":"这段有没有读取尚未赋值的 a？","result":"wrong","attempt":2,"answer":"有"}
+{"ts":"2026-11-18T13:55:05","topic":"c-types-and-basic-ops","source":"chat","task":"1.1","qid":"c1-uninit-which-line","question":"int a; int b=a+1; a=10; 哪行危险？X或Y","result":"correct","attempt":1,"answer":"X"}
+{"ts":"2026-11-18T14:04:00","topic":"c-types-and-basic-ops","source":"chat","task":"1.2","qid":"c2-unsigned-for-counts","question":"非负计数更稳妥倾向？A一律int B优先unsigned/size_t C必须long long","result":"correct","attempt":1,"answer":"B","note":"asked what unsigned/1u means"}
+{"ts":"2026-11-18T14:17:00","topic":"c-types-and-basic-ops","source":"chat","task":"1.2","qid":"c2-unsigned-neg1","question":"unsigned int x=-1 之后 x 如何？A仍是-1 B很大非负 C必编译失败","result":"correct","attempt":1,"answer":"B"}
+{"ts":"2026-11-18T14:25:01","topic":"c-types-and-basic-ops","source":"chat","task":"1.3","qid":"c3-float-char-claim","question":"哪句靠谱？A char不能运算 B 'A'等于\"A\" C double更精但仍不宜==","result":"correct","attempt":1,"answer":"C"}
+{"ts":"2026-11-19T17:41:51","topic":"c-types-and-basic-ops","source":"chat","task":"1.4","qid":"c4-int-div-to-double","question":"哪段得到约3.5？A 7/2赋double B 7/2.0 C int存7.0/2.0","result":"correct","attempt":1,"answer":"B"}
+{"ts":"2026-11-20T14:33:30","topic":"c-types-and-basic-ops","source":"chat","task":"1.5","qid":"c5-postfix-values","question":"int i=3; int x=i++; 之后 i 与 x？","result":"wrong","attempt":1,"answer":"C"}
+{"ts":"2026-11-20T14:36:08","topic":"c-types-and-basic-ops","source":"chat","task":"1.5","qid":"c5-postfix-values","question":"int i=3; int x=i++; 之后 i 与 x？","result":"correct","attempt":2,"answer":"B"}

@@ -1,0 +1,26 @@
+# 练习编译产物
+**/out
+*.o
+*.obj
+a.out
+*.exe
+*.dll
+*.so
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# 编辑器 / 系统
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/
+
+# 本地临时
+*.tmp
+*.log
