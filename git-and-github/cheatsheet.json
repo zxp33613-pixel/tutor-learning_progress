@@ -1,0 +1,58 @@
+[
+  {
+    "title": "心智模型与三个区",
+    "content": "```\n工作区 (working tree) --git add--> 暂存区 (index) --git commit--> 仓库 (.git)\n工作区 <--git restore----------- 暂存区 <--git restore --staged-- 仓库\n```\n\n| 位置 | 是什么 | 关键命令 |\n|---|---|---|\n| 工作区 | 你正在编辑的文件 | `git restore <f>` 撤回 |\n| 暂存区 | `.git/index`，一张清单 | `git add` / `git restore --staged` |\n| 仓库 | `objects/` + `refs/` + `HEAD` | `git commit` |\n\n- 存的是**快照**不是差异；`diff` 是事后算出来的。\n- 分支 = 指向 commit 的指针；`HEAD` = 当前分支。\n- 只有 commit 过的内容才可能找回。"
+  },
+  {
+    "title": "一次性配置",
+    "content": "```bash\ngit config --global user.name  \"你的名字\"\ngit config --global user.email \"you@example.com\"\ngit config --global init.defaultBranch main\ngit config --global core.editor vim\ngit config --global pull.rebase true      # pull 默认走 rebase\ngit config --global --list\n```\n\n| 层 | 作用范围 | 开关 |\n|---|---|---|\n| system | 整机 | `--system` |\n| global | 当前用户所有仓库 | `--global` |\n| local | 当前仓库（默认写入） | `--local` |\n\n就近覆盖：local > global > system。"
+  },
+  {
+    "title": "日常循环（最高频 6 条）",
+    "content": "```bash\ngit status                  # 先看\ngit switch -c feat/x        # 开分支\ngit add -p                  # 分块暂存\ngit commit -m \"feat: ...\"   # 提交\ngit pull --rebase           # 推之前收一手\ngit push -u origin feat/x   # 推分支\n```\n\n提交前自检：`git diff --staged`（发了什么）\n推送前自检：`git log origin/main..HEAD` + `git diff origin/main`"
+  },
+  {
+    "title": "查看状态与差异",
+    "content": "| 命令 | 比较对象 |\n|---|---|\n| `git diff` | 工作区 vs 暂存区（未 add） |\n| `git diff --staged` | 暂存区 vs HEAD（下次提交内容） |\n| `git diff HEAD` | 工作区 vs HEAD |\n| `git diff main origin/main` | 本地分支 vs 远程缓存 |\n\n```bash\ngit log --oneline --graph --all -n 10\ngit log -p -2\ngit log --author=\"li\" --since=\"2 weeks ago\"\ngit log --oneline -- path/to/file\ngit log -S\"TODO\" --oneline          # 哪次提交增删了这段串\ngit show <commit>\ngit blame <file>\ngit status --short                  # M 改 / A 加 / D 删 / ?? 未跟踪\n```"
+  },
+  {
+    "title": "撤销四层对照表",
+    "content": "| 要撤的东西 | 命令 | 会丢吗 |\n|---|---|---|\n| 工作区未 add 的改动 | `git restore <f>` | 丢（不可恢复） |\n| 已 add 未 commit | `git restore --staged <f>` | 不丢，回工作区 |\n| 已 commit 未 push | `git reset --soft/--mixed/--hard` | 看档位 |\n| 已 push | `git revert <commit>` | 不丢，追加反向提交 |\n| 最近一次提交补漏 | `git add <f> && git commit --amend` | 不丢 |\n\n```bash\ngit restore --source=HEAD~1 <f>   # 把文件恢复成上个版本\ngit reflog                        # 指针走过的每步，--hard 后救命用\ngit reset --hard HEAD@{1}\n```"
+  },
+  {
+    "title": "reset 三档",
+    "content": "| 档位 | HEAD | 暂存区 | 工作区 | 用途 |\n|---|---|---|---|---|\n| `--soft` | 回退 | 保留 | 保留 | 重新提交 / 合并 commit |\n| `--mixed`（默认） | 回退 | 重置 | 保留 | 重新挑要 add 的 |\n| `--hard` | 回退 | 重置 | 重置 | 彻底丢弃 ⚠️ |\n\n```bash\ngit reset --soft HEAD~3      # 三次揉成一次\ngit reset --mixed HEAD~1\ngit reset --hard HEAD~1      # 未提交改动永久消失\n```"
+  },
+  {
+    "title": "分支",
+    "content": "```bash\ngit branch                  # 列表，* 当前\ngit branch -vv              # 带 ahead/behind 与上游\ngit switch -c feat/x        # 新建并切换\ngit switch main\ngit switch -                # 切回上一个\ngit branch -d feat/x        # 删（未合并会拒绝）\ngit branch -D feat/x        # 强删\ngit branch -m old new       # 改名\n```\n\n- 分支切换 = 改指针 + 更新工作区，不复制文件。\n- 切之前先 `commit` 或 `stash`。"
+  },
+  {
+    "title": "合并与冲突",
+    "content": "| 情况 | 结果 |\n|---|---|\n| 目标分支没动过 | Fast-forward，不产生 commit |\n| 双方都前进过 | 三方合并，产生合并提交（两个父） |\n| 同一处被两边改 | 冲突，停下等你决定 |\n\n```bash\ngit merge feat/x\ngit merge --no-ff feat/x     # 强制留合并记录\ngit merge --abort            # 放弃合并\n```\n\n冲突文件里的标记：\n\n```\n<<<<<<< HEAD\n当前分支内容\n=======\n要合进来的内容\n>>>>>>> feat/x\n```\n\n解决三步：改文件删标记 → `git add <f>` → `git commit`。"
+  },
+  {
+    "title": "merge vs rebase",
+    "content": "```\nmerge :  A─B─C─D─M     （M 两个父，保留真实分叉）\nrebase:  A─B─C─D─E'─F'  （一条直线，哈希全变）\n```\n\n| | merge | rebase |\n|---|---|---|\n| 历史 | 真实、有分叉 | 线性、干净 |\n| 哈希 | 不变 | 全变 |\n| 用于共享分支 | ✅ | ❌ |\n| 用于个人分支整理 | 可以 | ✅ 更好 |\n\n黄金法则：**已 push 的共享提交不要 rebase**。"
+  },
+  {
+    "title": "远程操作",
+    "content": "```bash\ngit clone <url>\ngit remote -v\ngit remote add upstream <url>          # Fork 工作流\ngit remote set-url origin <新url>\ngit fetch [--all] [--prune]\ngit pull [--rebase]\ngit push [-u] [--tags]\ngit branch -vv\n```\n\n| 命令 | origin/x 更新 | 本地分支动 |\n|---|---|---|\n| fetch | ✅ | ❌ |\n| pull | ✅ | ✅ |\n| push | 反向 | — |"
+  },
+  {
+    "title": "排错速查",
+    "content": "| 现象 | 原因 | 解法 |\n|---|---|---|\n| `! [rejected] (fetch first)` | 远程有你没有的提交 | `fetch` → `pull --rebase` → `push` |\n| `.gitignore` 不生效 | 文件已被跟踪 | `git rm --cached <f>` |\n| `detached HEAD` | 检出了某个 commit 而非分支 | `git switch -c <新分支>` 或 `git switch main` |\n| 合并冲突 `AA`/`UU` | 待解决 | 改文件 → `add` → `commit` |\n| `fatal: not a git repository` | 不在仓库目录 | `cd` 到仓库根 或 `git init` |\n| 改动想临时收起 | 正在切分支 | `git stash` / `git stash pop` |\n| 提交作者信息错 | config 未设 | `git commit --amend --reset-author` |"
+  },
+  {
+    "title": "PR 与 GitHub 协作",
+    "content": "```\n本地分支 --push--> 远程分支 --创建--> PR --review--> merge --> main\n```\n\n```bash\ngit switch main && git pull --rebase\ngit switch -c feat/login\ngit add -p && git commit -m \"feat(login): 短信验证码登录\"\ngit push -u origin feat/login          # 推分支，不推 main\n```\n\n| 项 | 要点 |\n|---|---|\n| PR 跟踪谁 | 分支（继续 push 就自动更新，不用重开） |\n| 无权写怎么办 | Fork → clone 自己的 fork → PR 回原仓库 |\n| 三种合并 | Merge commit / Squash / Rebase |\n| 关 Issue | 描述里写 `Closes #123` |\n| 本地跑别人的 PR | `git fetch origin pull/123/head:pr-123` |\n| 合并后 | 回本地 `git switch main && git pull` |"
+  },
+  {
+    "title": "Commit 规范（Conventional Commits）",
+    "content": "```\n<type>(<scope>): <subject>\n\n[optional body]\n\n[optional footer]\n```\n\n| type | 用于 |\n|---|---|\n| feat | 新功能 |\n| fix | 修复 bug |\n| docs | 文档 |\n| refactor | 重构（不改功能） |\n| perf | 性能 |\n| test | 测试 |\n| style | 格式（缩进/空格） |\n| build / ci | 构建 / CI |\n| chore | 杂项 |\n\n破坏性变更：`feat!:` 或脚注 `BREAKING CHANGE: ...`。\n首行 ≤ 50 字符，一个 commit 一个逻辑变更。"
+  },
+  {
+    "title": "References & further reading",
+    "content": "**Git 官方**\n\n- Pro Git 中文版（全书免费）：https://git-scm.com/book/zh/v2\n- 命令参考手册（全部命令索引）：https://git-scm.com/docs\n\n**规范**\n\n- 约定式提交 1.0.0 中文：https://www.conventionalcommits.org/zh-hans/v1.0.0/\n\n**建议读法**\n\n- 刚起步：Pro Git 第 1–3 章（基础、分支）\n- 要搞懂远程协作：第 6 章（GitHub）\n- 想理解内部原理：第 10 章（Git 内部原理，对应本课 c1）\n"
+  }
+]

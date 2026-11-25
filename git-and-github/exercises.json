@@ -1,0 +1,254 @@
+[
+  {
+    "id": "undo-add",
+    "title": "撤销 add，保留工作区改动",
+    "difficulty": "easy",
+    "task": "c2",
+    "prompt": "在终端里，你 `git add a.txt` 之后发现暂存错了，想撤销这次 add，但**保留工作区里的改动**。应该用哪条命令？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/undo-add/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/undo-add/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "`restore --staged` 只把 index 恢复成 HEAD，工作区不动。`restore` 会用暂存区覆盖工作区（改动没了）；`--hard` 连工作区一起重置。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "ignore-tracked",
+    "title": "`.gitignore` 不生效的原因",
+    "difficulty": "easy",
+    "task": "c2",
+    "prompt": "`.gitignore` 里写了 `build/` 并且这个文件已经提交，但 `git status` 里仍然一直出现 `build/x.o`。最可能的原因是什么？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/ignore-tracked/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/ignore-tracked/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "`.gitignore` 只对从未被跟踪的文件生效；已跟踪的必须 `git rm --cached build/x.o` 先摘掉。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "partial-stage",
+    "title": "只提交一个文件里的部分改动",
+    "difficulty": "easy",
+    "task": "c2",
+    "prompt": "同一个文件里有两处互不相关的改动，你想把它们拆成两次提交。用哪条命令挑选要暂存的部分？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/partial-stage/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/partial-stage/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "`add -p` 逐块询问（y/n/s/e），把同一文件拆成多次提交。`-A` 会全部加入，`commit -a` 跳过暂存区提交全部改动。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "amend-msg",
+    "title": "修改最近一次提交信息",
+    "difficulty": "easy",
+    "task": "c3",
+    "prompt": "刚 commit 完（还没 push），发现提交信息写错了，想直接改掉。用哪条命令？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/amend-msg/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/amend-msg/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "`--amend` 直接替换最近一次提交。`reset --soft` 也能做到，但要多一步且容易搞乱；`revert` 是追加反向提交，不改历史。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "reset-soft-squash",
+    "title": "把最近三次提交揉成一次：第一步",
+    "difficulty": "medium",
+    "task": "c3",
+    "prompt": "你想把最近 3 个提交合并成一个（还没 push）。第一步应该执行什么？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/reset-soft-squash/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/reset-soft-squash/t1.txt",
+        "expected": "A"
+      }
+    ],
+    "solution": "输出 A",
+    "explanation": "`--soft` 回退 3 个提交但把改动全留在暂存区，随后一次 `git commit` 即成。`--hard` 会丢内容；`revert` 只是追加反向提交，不会合并。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "conflict-finish",
+    "title": "冲突解决之后的下一步",
+    "difficulty": "medium",
+    "task": "c4",
+    "prompt": "`git merge feat/x` 报冲突，你已经手动把文件改好、删掉了冲突标记。接下来怎么做？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/conflict-finish/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/conflict-finish/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "Git 需要知道\"这处已解决\"：`git add` 标记，再 `git commit` 完成合并。`--abort` 是放弃合并。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "push-rejected",
+    "title": "push 被拒的正确处理",
+    "difficulty": "medium",
+    "task": "c5",
+    "prompt": "`git push` 报 `! [rejected] main -> main (fetch first)`。正确做法是？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/push-rejected/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/push-rejected/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "拒绝表示远程有你本地没有的提交，先整合再推。force 会抹掉别人的提交；`reset --hard origin/main` 会丢掉你自己的提交。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "ff",
+    "title": "快进合并",
+    "difficulty": "medium",
+    "task": "c4",
+    "prompt": "你从 main 开出 feature 分支后，main 上**没有**任何新提交。此时把 feature 合进 main 会发生什么？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/ff/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/ff/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "目标分支没前进过 → 快进，只移动指针。要强制留记录用 `--no-ff`。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "fork",
+    "title": "外部贡献者的第一步",
+    "difficulty": "medium",
+    "task": "c6",
+    "prompt": "你对某个开源仓库没有写权限，想提交一个修复。第一步应该做什么？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/fork/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/fork/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "无写权限无法推原仓库；Fork 给你一份可写副本，PR 把改动送回原仓库。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "pr-update",
+    "title": "PR 打开后又改了代码",
+    "difficulty": "hard",
+    "task": "c6",
+    "prompt": "PR 已创建，reviewer 让你再改一行。改完提交并 push 之后，需要新建一个 PR 吗？\n\n只输出选项字母（A/B/C）。",
+    "setup": "题目文本在 `exercises/pr-update/t1.txt`，答案只写字母。",
+    "tests": [
+      {
+        "input": "exercises/pr-update/t1.txt",
+        "expected": "B"
+      }
+    ],
+    "solution": "输出 B",
+    "explanation": "PR = base 与 compare 分支的动态对比，同一分支继续 push 就自动刷新。",
+    "hints": [
+      "先想清楚改动处在哪个区",
+      "对照三区/撤销四层表",
+      "排除会丢失内容或改写公开历史的选项"
+    ]
+  },
+  {
+    "id": "lab-status",
+    "title": "读懂 git status --short",
+    "difficulty": "medium",
+    "task": "c2",
+    "prompt": "进入 `t1/` 目录（里面已经是一个 Git 仓库），运行 `git status --short`，把**输出原样**贴进来（每行一个，保持顺序）。",
+    "setup": "cd 到 exercises/lab-status/t1 再运行命令。",
+    "tests": [
+      {
+        "input": "exercises/lab-status/t1",
+        "expected": "M  README.md\n M app.c\n?? notes.txt"
+      }
+    ],
+    "solution": "cd exercises/lab-status/t1 && git status --short",
+    "explanation": "`M ` 左侧列表示暂存区有改动，` M` 右侧列表示工作区有改动，`??` 是未跟踪。本例 README.md 已暂存（`M `），app.c 只有工作区改动（` M`），notes.txt 未跟踪（`??`）。",
+    "hints": [
+      "两列分别对应暂存区和工作区",
+      "未跟踪文件用 ?? 表示",
+      "按路径字母顺序输出"
+    ]
+  },
+  {
+    "id": "lab-reset",
+    "title": "reset --soft 之后的历史",
+    "difficulty": "hard",
+    "task": "c3",
+    "prompt": "进入 `t1/`，执行 `git reset --soft HEAD~1`，然后运行 `git log --format=%s --reverse`，把输出原样贴进来。",
+    "setup": "cd 到 exercises/lab-reset/t1。",
+    "tests": [
+      {
+        "input": "exercises/lab-reset/t1",
+        "expected": "init project\nadd parser"
+      }
+    ],
+    "solution": "cd exercises/lab-reset/t1 && git reset --soft HEAD~1 && git log --format=%s --reverse",
+    "explanation": "--soft 只回退 HEAD，最后一个提交从历史消失但其内容仍在暂存区（可用 `git status` 看到）。--mixed 则会把改动退回工作区。",
+    "hints": [
+      "reset 的第一件事永远是移动 HEAD",
+      "--soft 不碰 index 和工作区",
+      "--reverse 让最早的提交排在最前"
+    ]
+  }
+]

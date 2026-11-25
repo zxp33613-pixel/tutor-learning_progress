@@ -1,0 +1,290 @@
+[
+  {
+    "id": "g-q01",
+    "type": "single",
+    "task": "c1",
+    "question": "`git add a.txt` 之后、`git commit` 之前，`a.txt` 的新内容存在于哪里？",
+    "options": [
+      "只在工作区",
+      "工作区和暂存区",
+      "已经在某个 commit 里",
+      "只在 `.git/objects` 但不在 index 里"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "add 把内容写入 objects 并登记到 index，同时工作区仍是新内容。它还不属于任何 commit，所以不在历史里。「只在 objects」漏掉了 index 的登记，是常见混淆点。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q02",
+    "type": "single",
+    "task": "c1",
+    "question": "关于分支，下列哪句是对的？",
+    "options": [
+      "分支是文件的完整副本",
+      "分支是一个指向 commit 的指针",
+      "分支必须与远程同名",
+      "删除分支会删除对应的 commit"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "分支只是 refs/heads 下指向某 commit 的一行哈希；切换不复制文件；删分支不会立刻删 commit（对象仍由 reflog 等引用保活）。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q03",
+    "type": "single",
+    "task": "c2",
+    "question": "`.gitignore` 里写了 `build/` 并已提交该文件，但 `git status` 仍显示 `build/x.o`。最可能的原因？",
+    "options": [
+      ".gitignore 语法错误",
+      "`build/x.o` 之前已经被跟踪",
+      "需要重启终端",
+      "需要先 commit 一次"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": ".gitignore 只对未被跟踪的文件生效；已跟踪文件需 `git rm --cached build/x.o`。语法错会影响整行匹配而不是单文件；终端与 commit 次数无关。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q04",
+    "type": "single",
+    "task": "c2",
+    "question": "只想提交同一个文件里的一部分改动，正确做法是？",
+    "options": [
+      "`git add -A`",
+      "`git add -p <file>`",
+      "`git commit -a`",
+      "`git stash`"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "add -p 逐块询问是否暂存。`-A` 会全部加入，`commit -a` 跳过暂存区直接提交全部已跟踪改动，stash 是收起不是选择性提交。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q05",
+    "type": "single",
+    "task": "c3",
+    "question": "`git diff --staged` 比较的是哪两者？",
+    "options": [
+      "工作区与暂存区",
+      "暂存区与最新 commit",
+      "工作区与最新 commit",
+      "两个分支之间"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "--staged(=--cached) 显示\"下次提交会包含什么\"。工作区与暂存区是裸 `git diff`；工作区与 HEAD 是 `git diff HEAD`。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q06",
+    "type": "single",
+    "task": "c3",
+    "question": "执行 `git reset --soft HEAD~1` 之后的状态是？",
+    "options": [
+      "所有改动都丢失",
+      "改动都保留在暂存区，工作区完好",
+      "改动退回工作区且未暂存",
+      "HEAD 不变，仅清空暂存区"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "--soft 只回退 HEAD 指针，索引与工作区不动，因此原本的提交内容仍在暂存区。退回工作区是 --mixed；丢失是 --hard；HEAD 不变描述错误。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q07",
+    "type": "single",
+    "task": "c3",
+    "question": "一次提交已经 push 到团队共享分支，发现内容有误。应该怎么做？",
+    "options": [
+      "`git reset --hard` 后强推",
+      "`git revert <commit>` 追加反向提交",
+      "`git commit --amend` 后强推",
+      "删除远程分支重建"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "公开历史改写会打断他人；revert 追加一个反向提交，历史可追溯。其余三项都改写了已公开历史。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q08",
+    "type": "single",
+    "task": "c4",
+    "question": "合并时出现 `<<<<<<< HEAD` 到 `>>>>>>> feat/x` 的标记，说明什么？",
+    "options": [
+      "仓库已损坏",
+      "两边修改了同一处，Git 需要你决定",
+      "分支已被删除",
+      "需要重新 clone"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "这是冲突标记：HEAD 段是当前分支，下段是待合入分支。解决后 add + commit 即可，不属于损坏。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q09",
+    "type": "single",
+    "task": "c4",
+    "question": "什么时候产生 fast-forward 合并？",
+    "options": [
+      "两边都新增了提交",
+      "目标分支自开出分支后没有新提交",
+      "使用 `--no-ff` 时",
+      "存在冲突时"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "目标分支未前进时指针可直接前移。两边都前进是三方合并；--no-ff 恰恰阻止快进；冲突与快进互斥。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q10",
+    "type": "single",
+    "task": "c5",
+    "question": "`git fetch origin` 之后，本地 `main` 分支发生什么？",
+    "options": [
+      "自动快进到远程最新",
+      "完全没变，只有 `origin/main` 更新",
+      "产生一个合并提交",
+      "本地 `main` 被重置到远程"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "fetch 只更新远程跟踪分支 origin/main，本地分支需手动 merge/rebase。自动合并是 pull 的行为。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q11",
+    "type": "single",
+    "task": "c5",
+    "question": "离线提交了 3 次，联网后执行一次 `git push`，远程会多出几个 commit？",
+    "options": [
+      "1 个",
+      "3 个",
+      "0 个",
+      "取决于是否用了 -u"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "push 传输\"远程没有的提交集合\"（origin/main..HEAD 的全部），不是每次同步生成一个。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q12",
+    "type": "single",
+    "task": "c5",
+    "question": "`git push` 报 `! [rejected] main -> main (fetch first)`，正确做法是？",
+    "options": [
+      "`git push --force`",
+      "`fetch` → `pull --rebase` → `push`",
+      "删除本地 `.git` 重新 clone",
+      "`git reset --hard origin/main` 后强推"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "拒绝表示远程存在你本地没有的提交；先整合再推。force 会抹掉别人的提交，reset --hard 会丢自己的提交。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q13",
+    "type": "multi",
+    "task": "c1",
+    "question": "关于 commit 与 push 的区别，哪些说法正确？(Select TWO.)",
+    "options": [
+      "commit 不需要网络",
+      "push 会产生新的 commit",
+      "push 只是把已有提交复制到远程",
+      "commit 会让其他人立即看到",
+      "commit 之后 `.gitignore` 立即对历史生效"
+    ],
+    "answer": [
+      0,
+      2
+    ],
+    "explanation": "commit 完全本地、离线可用；push 不新建提交，只上传已有对象。push 不产生提交这一点常被误认为\"同步一次生成一个\"，commit 也只对本地可见。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q14",
+    "type": "single",
+    "task": "c6",
+    "question": "你对一个开源仓库没有写权限，想提交修复。正确的第一步？",
+    "options": [
+      "直接 `git push origin main`",
+      "Fork 到自己账号，clone 自己的 fork，改完推上去再发 PR",
+      "把 patch 邮件发给作者",
+      "在本仓库新建分支后强推"
+    ],
+    "answer": [
+      1
+    ],
+    "explanation": "无写权限无法推送原仓库；Fork 给你一份可写副本。patch 邮件是旧工作流；强推同样被权限拦截。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q15",
+    "type": "order",
+    "task": "c6",
+    "question": "把以下步骤排成正确的 PR 流程顺序。",
+    "options": [
+      "`git push -u origin feat/login`",
+      "`git switch main && git pull --rebase`",
+      "在网页创建 Pull Request 并指定 reviewer",
+      "`git switch -c feat/login`",
+      "`git commit -m \"feat(login): ...\"`"
+    ],
+    "answer": [
+      1,
+      3,
+      4,
+      0,
+      2
+    ],
+    "explanation": "先更新 main → 开分支 → 提交 → 推分支 → 网页建 PR。顺序颠倒（例如先开分支再更新 main）会导致 PR 混入无关改动。",
+    "source": "tutor quiz"
+  },
+  {
+    "id": "g-q16",
+    "type": "match",
+    "task": "c3",
+    "question": "把左侧的撤销需求与右侧命令配对。",
+    "options": [
+      "`git restore <f>`",
+      "`git restore --staged <f>`",
+      "`git reset --soft HEAD~1`",
+      "`git revert <c>`"
+    ],
+    "prompts": [
+      "丢弃工作区未 add 的修改",
+      "取消 add，保留工作区改动",
+      "撤掉最近一次提交但保留改动在暂存区",
+      "撤掉已 push 的提交"
+    ],
+    "answer": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "explanation": "四层撤销各自对应一个命令：工作区、暂存区、本地提交、公开提交。混用会导致\"改动莫名消失\"或\"历史被改写\"。",
+    "source": "tutor quiz"
+  }
+]

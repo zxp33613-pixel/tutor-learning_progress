@@ -1,0 +1,8 @@
+在终端里，你 `git add a.txt` 之后发现暂存错了，想撤销这次 add，但**保留工作区里的改动**。应该用哪条命令？
+
+选项：
+A. `git restore a.txt`
+B. `git restore --staged a.txt`
+C. `git reset --hard a.txt`
+
+答案格式：只输出选项字母，例如 A

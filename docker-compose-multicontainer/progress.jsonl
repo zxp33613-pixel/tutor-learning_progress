@@ -1,0 +1,4 @@
+{"ts":"2026-11-25T15:35:33","topic":"docker-compose-multicontainer","source":"chat","task":"2.1","qid":"d2-c1-service-dns","question":"从web容器用http://box/访问另一服务成功","result":"correct","attempt":1,"answer":"wget got nginx html via service name box","note":"127.0.0.1 inside container != box"}
+{"ts":"2026-11-25T15:38:38","topic":"docker-compose-multicontainer","source":"chat","task":"2.2","qid":"d2-c2-depends-on","question":"depends_on保证？A迁移完成 B先启容器不保证就绪 C共用文件系统","result":"correct","attempt":1,"answer":"B"}
+{"ts":"2026-11-25T15:41:59","topic":"docker-compose-multicontainer","source":"chat","task":"2.3","qid":"d2-c3-named-volume","question":"Redis持久数据更常见？A绑/tmp B命名卷 C可写层","result":"correct","attempt":1,"answer":"B"}
+{"ts":"2026-11-25T15:43:08","topic":"docker-compose-multicontainer","source":"chat","task":"2.4","qid":"d2-c4-secrets-not-in-image","question":"密码写进Dockerfile推公共仓？A没问题 B密钥进层应运行时注入 C只影响depends_on","result":"correct","attempt":1,"answer":"B"}

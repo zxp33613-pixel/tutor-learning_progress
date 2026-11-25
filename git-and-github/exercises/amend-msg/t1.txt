@@ -1,0 +1,8 @@
+刚 commit 完（还没 push），发现提交信息写错了，想直接改掉。用哪条命令？
+
+选项：
+A. `git reset --soft HEAD~1` 后重新 commit
+B. `git commit --amend`
+C. `git revert HEAD`
+
+答案格式：只输出选项字母，例如 A

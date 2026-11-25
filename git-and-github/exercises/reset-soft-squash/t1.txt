@@ -1,0 +1,8 @@
+你想把最近 3 个提交合并成一个（还没 push）。第一步应该执行什么？
+
+选项：
+A. `git reset --soft HEAD~3`
+B. `git reset --hard HEAD~3`
+C. `git revert HEAD~3..HEAD`
+
+答案格式：只输出选项字母，例如 A

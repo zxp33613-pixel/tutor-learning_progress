@@ -1,0 +1,8 @@
+`git merge feat/x` 报冲突，你已经手动把文件改好、删掉了冲突标记。接下来怎么做？
+
+选项：
+A. 直接 `git merge --continue`
+B. `git add <文件>` 然后 `git commit`
+C. `git merge --abort`
+
+答案格式：只输出选项字母，例如 A

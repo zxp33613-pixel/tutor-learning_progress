@@ -1,0 +1,8 @@
+`.gitignore` 里写了 `build/` 并且这个文件已经提交，但 `git status` 里仍然一直出现 `build/x.o`。最可能的原因是什么？
+
+选项：
+A. `.gitignore` 语法写错了
+B. `build/x.o` 之前已经被跟踪（commit 过）
+C. 需要重启终端才生效
+
+答案格式：只输出选项字母，例如 A

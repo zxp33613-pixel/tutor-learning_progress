@@ -1,0 +1,1 @@
+{"ts":"2026-11-24T13:52:04","topic":"c-for-408","source":"chat","task":"c1","qid":"c1-static-lifetime","question":"static 局部变量 x，f() 连续调用三次输出？","result":"correct","attempt":1,"answer":"A 1 2 3"}

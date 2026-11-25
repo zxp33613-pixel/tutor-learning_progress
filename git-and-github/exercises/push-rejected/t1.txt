@@ -1,0 +1,8 @@
+`git push` 报 `! [rejected] main -> main (fetch first)`。正确做法是？
+
+选项：
+A. `git push --force`
+B. `git fetch` → `git pull --rebase` → `git push`
+C. `git reset --hard origin/main` 后再强推
+
+答案格式：只输出选项字母，例如 A

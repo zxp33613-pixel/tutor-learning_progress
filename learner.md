@@ -1,9 +1,26 @@
 # Learner profile
 
-- Level: beginner-to-intermediate programming; systematic learning mode
-- Order: **C first, then Python** (do not start Python curriculum until C foundation plan is complete)
-- Goal for C: systematic understanding (types, control, arrays, pointers, functions, structs, memory, files) with light exam-style checks at chapter ends
-- Goal for Python: after C, systematic Python from basics to small projects
-- Language: teach in **简体中文**; code identifiers/comments can be English
-- Style: Socratic, one chunk at a time; prefer real compilable/runnable code
-- Constraints: working professional — prefer focused sessions; ask before long dumps
+- Level: 编程入门到中级
+- Language: 用**简体中文**教学；代码标识符/注释可用英文
+- Style: 苏格拉底式，一次一块；偏好可真实编译运行的代码
+- Constraints: 在职，偏好短时段；长篇幅输出前先问
+
+## 学习优先级（2026-11-25 调整）
+
+1. **C 语言系统视频课**：跟视频为主，tutor 按需答疑/补笔记
+2. **考研数学二**：公式手册 `~/桌面/考研数学二-必背公式手册.md`（可用同目录 `.html` 阅读）
+3. **Git 与 GitHub**：已完成讲义 + 实操 Lab1–5，按需复习
+4. **Docker（本阶段完成/搁置）**：第1课 + 第2课核心已归档；笔记见 `Docker-学习笔记.md`；更深内容以后再说
+5. **408 应试 C（暂停）**：视频课看完后再开；不参与复习提醒
+6. **Python（未开始）**：C 基础完成后再开
+
+## 各线目标
+
+- C 视频课：打牢基础
+- 数学二：先背公式（高数 + 线代）
+- Docker：本阶段能跑容器、写简单 Dockerfile/Compose、懂多服务网络即可
+- Git：日常提交/分支/远程/PR 流程已练过
+
+## 复习约定
+
+- 暂停/搁置科目不参与日常复习提醒
